@@ -1,0 +1,116 @@
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .leftPanel {
+    flex: 1.5;
+    background-color: #1A2B44;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .projectInfo {
+    max-width: 400px;
+  }
+  
+  .appName {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  
+  .mission {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  .sectionHeader {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 20px 0 10px;
+  }
+  
+  .featuresList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .featuresList li {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .rightPanel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+  }
+  
+  .form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .inputGroup label {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .input {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .button {
+    background-color: #3B5998;
+    color: white;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #2d4373;
+  }
+  
+  .signInText {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+  }
+  
+  .signInLink {
+    color: #3B5998;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .signInLink:hover {
+    color: #2d4373;
+  }  

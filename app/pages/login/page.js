@@ -1,6 +1,6 @@
 "use client";
 
-import styles from '../../styles/signup.module.css';
+import styles from '../../styles/signup.module.css'; // Reuse signup styles
 
 export default function Login() {
   return (
@@ -11,6 +11,18 @@ export default function Login() {
           <p className={styles.mission}>
             Empowering users with accurate information by automatically fact-checking speeches, articles, and videos.
           </p>
+          <h2 className={styles.sectionHeader}>What Does This App Do?</h2>
+          <ul className={styles.featuresList}>
+            <li>Real-time Fact-Checking of videos, speeches, and articles.</li>
+            <li>Cross-references claims with reliable sources to validate them.</li>
+            <li>Provides links to sources that prove or disprove claims.</li>
+            <li>Works across multiple domains: politics, science, health, and more.</li>
+          </ul>
+          <h2 className={styles.sectionHeader}>Cool Features</h2>
+          <ul className={styles.featuresList}>
+            <li>Supports multiple platforms: YouTube, websites, PDFs, and more.</li>
+            <li>Continuously updated with the latest information.</li>
+          </ul>
         </div>
       </div>
       <div className={styles.rightPanel}>

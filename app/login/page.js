@@ -1,9 +1,8 @@
 "use client";
 
-import Link from 'next/link';
-import styles from '../../styles/signup.module.css';
+import styles from '../styles/signup.module.css';
 
-export default function Signup() {
+export default function Login() {
   return (
     <div className={styles.container}>
       <div className={styles.leftPanel}>
@@ -36,16 +35,12 @@ export default function Signup() {
             <label htmlFor="password">Password</label>
             <input type="password" id="password" className={styles.input} />
           </div>
-          <div className={styles.inputGroup}>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" className={styles.input} />
-          </div>
-          <button type="submit" className={styles.button}>Sign up</button>
+          <button type="submit" className={styles.button}>Login</button>
           <p className={styles.signInText}>
-            Already a member?{' '}
-            <Link href="/login" className={styles.signInLink}>
-              Sign in
-            </Link>
+            New user?{' '}
+            <a href="/signup" className={styles.signInLink}>
+              Create account
+            </a>
           </p>
         </form>
       </div>

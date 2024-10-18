@@ -1,6 +1,7 @@
 "use client";
 
-import styles from '../styles/signup.module.css';
+import Link from 'next/link';
+import styles from '../../styles/signup.module.css';
 
 export default function Signup() {
   return (
@@ -21,7 +22,6 @@ export default function Signup() {
           <h2 className={styles.sectionHeader}>Cool Features</h2>
           <ul className={styles.featuresList}>
             <li>Supports multiple platforms: YouTube, websites, PDFs, and more.</li>
-            <li>Automated and fast claim analysis.</li>
             <li>Continuously updated with the latest information.</li>
           </ul>
         </div>
@@ -42,7 +42,10 @@ export default function Signup() {
           </div>
           <button type="submit" className={styles.button}>Sign up</button>
           <p className={styles.signInText}>
-            Already a member? <a href="#" className={styles.signInLink}>Sign in</a>
+            Already a member?{' '}
+            <Link href="/login" className={styles.signInLink}>
+              Sign in
+            </Link>
           </p>
         </form>
       </div>

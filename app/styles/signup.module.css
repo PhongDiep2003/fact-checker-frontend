@@ -77,9 +77,10 @@
   .input {
     padding: 12px;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 5px;
     width: 100%;
+    color: #000000;
   }
   
   .button {
@@ -100,7 +101,7 @@
   .signInText {
     margin-top: 10px;
     font-size: 0.9rem;
-    color: #666;
+    color: #000000;
     text-align: center;
   }
   

@@ -1,22 +1,76 @@
-import Login from './login/page';
+"use client";
+
+import { useState } from 'react'; 
+import { FaUserCircle } from 'react-icons/fa'; 
 import PostCard from './components/PostCard';
 
 export default function Home() {
-  return (
-    <div className='flex flex-col h-screen bg-white py-60 overflow-y-auto'>
-      <div className='flex justify-center'>
-        <input 
-          className='w-2/4 h-12 p-5 border-2 border-solid border-black rounded-md text-black' 
-          placeholder='Enter Youtube URL...' 
-          style={{ color: 'black' }} 
-        />
-      </div>
-      <p className='text-4xl text-[#000000] font-normal mt-32 text-center'>Explore trending searches</p>
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-      <div className='flex flex-col space-y-24 w-full mt-20 pl-72'>
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
+  return (
+    <div className="flex flex-col min-h-screen bg-white overflow-y-auto">
+      {/*  I'll put some dividers so clear which section of the page is which, e.g here is Header section */}
+      <div className="absolute top-4 right-4 z-10">
+        <FaUserCircle
+          size={32}
+          className="text-white cursor-pointer"
+          onClick={toggleDropdown}
+        />
+        {dropdownOpen && (
+          <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
+            <ul className="py-2">
+              <li className="px-4 py-2 hover:bg-black-200 cursor-pointer">Profile</li>
+              <li className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer">
+                Logout
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
+
+      {/* Search section */}
+      <div className="flex flex-col items-center justify-center bg-[#1A2B44] text-white h-[60vh]">
+        <h1 className="text-5xl font-extrabold mb-4">Uncover the Truth Instantly</h1>
+        <p className="text-xl text-center max-w-2xl mb-6">
+          Fact-check speeches, videos, and articles at lightning speed. Enter a YouTube URL, and let us do the heavy lifting.
+        </p>
+        <input
+          className="w-3/4 md:w-1/2 h-12 p-5 border-2 border-white rounded-md text-black placeholder-gray-500 focus:outline-none"
+          placeholder="Enter Youtube URL..."
+        />
+        <div className="mt-8">
+          <button className="bg-white text-black px-6 py-2 rounded-full font-semibold shadow-lg hover:bg-gray-100">
+            Get Started
+          </button>
+        </div>
+      </div>
+
+      {/* Slogan Section */}
+      <div className="text-center py-16 bg-gray-50">
+        <p className="text-2xl font-light italic text-gray-600">
+          "Empowering users with accurate information, one fact at a time."
+        </p>
+      </div>
+
+      {/* Trending Searches Section */}
+      <p className="text-4xl text-[#000000] font-normal mt-6 text-center">
+        Explore Trending Searches
+      </p>
+
+      <div className="flex flex-col space-y-24 w-full mt-8 pl-20 pr-20">
+        <PostCard />
         <PostCard />
         <PostCard />
       </div>
+
+      {/* Footer */}
+      <footer className="w-full py-8 bg-black text-white text-center mt-16">
+        <p className="text-sm">
+          © 2024 Fact Checker - Empowering users with truth
+        </p>
+      </footer>
     </div>
   );
 }

@@ -3,12 +3,19 @@
 import { useState } from 'react'; 
 import { FaUserCircle } from 'react-icons/fa'; 
 import PostCard from './components/PostCard';
-
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 export default function Home() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-
+  const router = useRouter()
+  useEffect(() => {
+    const userId = localStorage.getItem("userId")
+    if (!userId) {
+      router.push(`/login`)
+    }
+  },[])
   return (
     <div className="flex flex-col min-h-screen bg-white overflow-y-auto">
       {/*  I'll put some dividers so clear which section of the page is which, e.g here is Header section */}

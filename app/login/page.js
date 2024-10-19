@@ -1,8 +1,19 @@
 "use client";
-
+import { useState } from 'react';
 import styles from '../styles/signup.module.css';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('Form submitted');
+    console.log('Email:', email);
+    setEmail('');
+    setPassword('');
+  }
   return (
     <div className={styles.container}>
       <div className={styles.leftPanel}>
@@ -26,14 +37,14 @@ export default function Login() {
         </div>
       </div>
       <div className={styles.rightPanel}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" className={styles.input} />
+            <input type="email" id="email" className={styles.input} value={email} onChange={e => setEmail(e.target.value)} required/>
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" className={styles.input} />
+            <input type="password" id="password" className={styles.input} value={password} onChange={e => setPassword(e.target.value)} required />
           </div>
           <button type="submit" className={styles.button}>Login</button>
           <p className={styles.signInText}>

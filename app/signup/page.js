@@ -2,8 +2,26 @@
 
 import Link from 'next/link';
 import styles from '../styles/signup.module.css';
+import { useState } from 'react';
+
+
 
 export default function Signup() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('sign up Form submitted');
+    console.log('Email:', email);
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    
+  }
+
+
   return (
     <div className={styles.container}>
       <div className={styles.leftPanel}>
@@ -27,18 +45,18 @@ export default function Signup() {
         </div>
       </div>
       <div className={styles.rightPanel}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" className={styles.input} />
+            <input type="email" id="email" className={styles.input} value={email} required onChange={e => setEmail(e.target.value)} />
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" className={styles.input} />
+            <input type="password" id="password" className={styles.input} value={password} required onChange={e => setPassword(e.target.value)}/>
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" className={styles.input} />
+            <input type="password" id="confirmPassword" className={styles.input} value={confirmPassword} required onChange={e => setConfirmPassword(e.target.value)} />
           </div>
           <button type="submit" className={styles.button}>Sign up</button>
           <p className={styles.signInText}>

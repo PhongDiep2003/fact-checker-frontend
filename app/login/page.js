@@ -1,18 +1,40 @@
 "use client";
 import { useState } from 'react';
 import styles from '../styles/signup.module.css';
-
+import { useRouter } from 'next/navigation';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const router = useRouter()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted');
-    console.log('Email:', email);
-    setEmail('');
-    setPassword('');
+    try {
+      const res = await fetch('http://localhost:3000/api/login', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          localStorage.setItem('userId', data?.user?._id)
+          router.push('/')
+        }
+        alert(data.message)
+      }
+    }
+    catch (error) {
+      alert('An error occurred. Please try again.');
+      console.error('Error Loggin In: ', error);
+    }
+    finally {
+      setEmail('');
+      setPassword('');
+    }
   }
   return (
     <div className={styles.container}>

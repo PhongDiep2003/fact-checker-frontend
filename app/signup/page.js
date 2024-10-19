@@ -3,22 +3,46 @@
 import Link from 'next/link';
 import styles from '../styles/signup.module.css';
 import { useState } from 'react';
-
-
+import { useRouter } from 'next/navigation';
 
 export default function Signup() {
+  const router = useRouter()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('sign up Form submitted');
-    console.log('Email:', email);
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-    
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+    try {
+      const res = await fetch('http://localhost:3000/api/signup', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          router.push('/login')
+        }
+        alert(data.message)
+      }
+    }
+    catch (error) {
+      alert('An error occurred. Please try again.');
+      console.error('Error signing up:', error);
+    }
+    finally {
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+    }
   }
 
 

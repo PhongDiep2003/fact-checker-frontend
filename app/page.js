@@ -1,7 +1,16 @@
+'use client'
 import Login from './login/page';
 import PostCard from './components/PostCard';
-
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 export default function Home() {
+  const router = useRouter()
+  useEffect(() => {
+    const userId = localStorage.getItem("userId")
+    if (!userId) {
+      router.push(`/login`)
+    }
+  },[])
   return (
   <div className='flex flex-col h-screen bg-white py-60 overflow-y-auto'>
     <div className='flex justify-center'>

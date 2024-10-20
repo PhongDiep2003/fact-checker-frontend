@@ -3,7 +3,7 @@
 import { FaUserCircle } from 'react-icons/fa'; 
 import PostCard from './components/PostCard';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -12,12 +12,6 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const router = useRouter()
-  useEffect(() => {
-    const userId = localStorage.getItem("userId")
-    if (!userId) {
-      router.push(`/login`)
-    }
-  },[])
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page refresh
@@ -61,10 +55,15 @@ export default function Home() {
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
             <ul className="py-2">
-              <li className="px-4 py-2 hover:bg-black-200 cursor-pointer">Profile</li>
-              <li className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer">
+              <li className="px-4 py-2 hover:bg-black-200 cursor-pointer text-black">Profile</li>
+              <li className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer" onClick={() => {
+                if (localStorage.getItem("userId")) {
+                  localStorage.removeItem("userId")
+                }
+                router.push('/login')
+              }}>
                 Logout
-              </li>
+              </li> 
             </ul>
           </div>
         )}

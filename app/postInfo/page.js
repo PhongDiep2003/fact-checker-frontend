@@ -1,8 +1,32 @@
 "use client"
-import Image from 'next/image';
-import React from 'react'
-
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
 const PostInfo = () => {
+  const router = useRouter(); 
+  const postId = router.state;
+  const [content, setContent] = useState("")
+  const handleEnterComment = async () => {
+    try {
+      if (localStorage.getItem("userId")) {
+        const res = await fetch('http://localhost:3000/api/postComment', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ postId, userId, content}),
+        })
+        if (res.ok) {
+          const data = await res.json()
+          
+        }
+
+      } else {
+        alert("Please login to comment")
+      }
+    } catch(error) {
+      console.log("Error in Submitting Comment: ", error.message)
+    }
+  }
   return (
     <div className='h-screen'>
       {/* Grid */}
@@ -38,6 +62,8 @@ const PostInfo = () => {
             <input
               className="w-3/4 h-14 p-5 border-2 border-[#1A2B44] rounded-md text-black placeholder-gray-500 focus:outline-none mb-40 "
               placeholder="Enter comment..."
+              value={content}
+              onChange={e => setContent(e.target.value)}
             />
             {/* Comments */}
             <div className='flex w-full flex-col items-center space-y-20 overflow-y-auto'>

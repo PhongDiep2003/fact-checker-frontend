@@ -35,7 +35,7 @@ export default function Home() {
       console.log('API Response:', data);
 
       localStorage.setItem('postData', JSON.stringify(data));
-      router.push('/post');
+      router.push('/post?userId=' + localStorage.getItem("userId"));
     } catch (error) {
       console.error('Error during submission:', error);
     } finally {

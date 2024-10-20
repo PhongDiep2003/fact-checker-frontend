@@ -4,7 +4,6 @@ import { FaUserCircle } from 'react-icons/fa';
 import PostCard from './components/PostCard';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-//Allow requests from your Next.js frontend// Allow requests from your Next.js frontend
 
 export default function Home() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -15,39 +14,33 @@ export default function Home() {
   const router = useRouter()
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent form submission refresh
+    e.preventDefault(); // Prevent page refresh
     try {
-      setIsLoading(true);
-  
-      const params = new URLSearchParams({
-        url,
-        phrase,
-      });
-  
-      const res = await fetch(`http://54.193.172.228/check?${params.toString()}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      // Log the raw response to check the status
-      console.log('Response status:', res.status);
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-  
-      const data = await res.json();
-      console.log('Data:', data);
-      alert('Success');
-    } catch (err) {
-      console.error('Error in checking claims:', err);
+        setIsLoading(true);
+
+        const params = new URLSearchParams({ url, phrase });
+        const response = await fetch(`http://54.193.172.228/check?${params.toString()}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('API Response:', data); // Debugging
+
+        // Store data in localStorage and navigate to post page
+        localStorage.setItem('postData', JSON.stringify(data));
+        router.push('/post');
+    } catch (error) {
+        console.error('Error during submission:', error); // Enhanced error logging
     } finally {
-      setUrl('');
-      setPhrase('');
-      setIsLoading(false);
+        setIsLoading(false);
     }
-  };
+};
+
   
   
   return (

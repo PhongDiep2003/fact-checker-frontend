@@ -34,7 +34,6 @@ export default function Home() {
       const data = await response.json();
       console.log('API Response:', data);
 
-      // Store data in localStorage and navigate to post page
       localStorage.setItem('postData', JSON.stringify(data));
       router.push('/post');
     } catch (error) {
@@ -46,6 +45,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white overflow-y-auto">
+      {/* Header */}
       <div className="absolute top-4 right-4 z-10">
         <FaUserCircle
           size={32}
@@ -55,15 +55,13 @@ export default function Home() {
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
             <ul className="py-2">
-              <li className="px-4 py-2 hover:bg-black-200 cursor-pointer text-black">
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black">
                 Profile
               </li>
               <li
                 className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer"
                 onClick={() => {
-                  if (localStorage.getItem("userId")) {
-                    localStorage.removeItem("userId");
-                  }
+                  localStorage.removeItem("userId");
                   router.push('/login');
                 }}
               >
@@ -74,21 +72,17 @@ export default function Home() {
         )}
       </div>
 
-      <div className="flex flex-col items-center justify-center bg-[#1A2B44] text-white h-[60vh]">
-        <h1 className="text-5xl font-extrabold mb-4">
-          Uncover the Truth Instantly
-        </h1>
+      {/* Blue Section with Adjusted Centering */}
+      <div className="flex flex-col items-center justify-start bg-[#1A2B44] text-white h-[60vh] pt-16">
+        <h1 className="text-5xl font-extrabold mb-4">Uncover the Truth Instantly</h1>
         <p className="text-xl text-center max-w-2xl mb-6">
-          Fact-check speeches, videos, and articles at lightning speed. Enter a YouTube URL, and let us do the heavy lifting.
+          Fact-check speeches, videos, and articles at lightning speed. Enter a YouTube or article URL, and let us do the heavy lifting.
         </p>
 
-        <form
-          className="flex flex-col w-full h-full items-center"
-          onSubmit={handleSubmit}
-        >
+        <form className="flex flex-col w-full h-full items-center" onSubmit={handleSubmit}>
           <input
             className="w-3/4 md:w-1/2 h-12 p-5 border-2 border-white rounded-md text-black placeholder-gray-500 focus:outline-none"
-            placeholder="Enter Youtube URL..."
+            placeholder="Enter Youtube or article URL..."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             type="text"
@@ -116,22 +110,25 @@ export default function Home() {
         </form>
       </div>
 
+      {/* Slogan Section */}
       <div className="text-center py-16 bg-gray-50">
         <p className="text-2xl font-light italic text-gray-600">
           "Empowering users with accurate information, one fact at a time."
         </p>
       </div>
 
+      {/* Trending Searches */}
       <p className="text-4xl text-[#000000] font-normal mt-6 text-center">
         Explore Trending Searches
       </p>
 
-      <div className="flex flex-col space-y-24 w-full mt-8 pl-20 pr-20">
+      <div className="flex flex-col space-y-24 w-full mt-8 px-20">
         <PostCard />
         <PostCard />
         <PostCard />
       </div>
 
+      {/* Footer */}
       <footer className="w-full py-8 bg-black text-white text-center mt-16">
         <p className="text-sm">© 2024 Fact Checker - Empowering users with truth</p>
       </footer>

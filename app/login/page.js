@@ -75,6 +75,11 @@ export default function Login() {
               Create account
             </a>
           </p>
+          <p className={styles.signInText}>
+            <a href="/" className={styles.signInLink}>
+              Continue as guest
+            </a>
+          </p>
         </form>
       </div>
     </div>

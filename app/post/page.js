@@ -41,9 +41,10 @@ export default function PostPage() {
     const handleSubmit = async () => {
     
         const data = {
-            user_id: router.query,
-            ...post
+            user_id: localStorage.getItem("userId"),
+            claims: {...post}
         }
+        console.log(router.query);
 
         // Send JSON data to an API route or another server
         const response = await fetch('/api/post/create', {
@@ -114,7 +115,7 @@ export default function PostPage() {
                             <div style={styles.claimHeader}>
                                 <div style={styles.claimIndex}>{index + 1}</div>
                                 <div>
-                                    <p style={styles.claimText}>{claimData.claim}</p>
+                                    <p style={styles.claimText}>{claimData.text}</p>
                                     <div style={styles.rating}>
                                         Rating: <span style={styles.bold}>{claimData.rating}</span>
                                     </div>

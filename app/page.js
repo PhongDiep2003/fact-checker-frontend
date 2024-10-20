@@ -20,7 +20,7 @@ export default function Home() {
 
       const params = new URLSearchParams({ url, phrase });
       const response = await fetch(
-        `http://54.193.172.228/check?${params.toString()}`,
+        `http://127.0.0.1:5000/check?${params.toString()}`,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },

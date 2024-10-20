@@ -115,7 +115,7 @@ export default function PostPage() {
                             <div style={styles.claimHeader}>
                                 <div style={styles.claimIndex}>{index + 1}</div>
                                 <div>
-                                    <p style={styles.claimText}>{claimData.claim}</p>
+                                    <p style={styles.claimText}>{claimData.text}</p>
                                     <div style={styles.rating}>
                                         Rating: <span style={styles.bold}>{claimData.rating}</span>
                                     </div>

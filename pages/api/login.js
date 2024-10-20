@@ -20,6 +20,6 @@ export default async function login(req, res) {
     res.status(200).json({ success: false, user: null, message: 'User Not Found' });
   } catch (error) {
     console.error('Error Logging In', error);
-    res.status(500).json({ success: false, user: null,  message: 'Error Logging In: ', error });
+    res.status(500).json({ success: false, user: null, message: `Error In Logging In ${error.message}`});
   }
 }

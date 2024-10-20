@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from 'react'; 
 import { FaUserCircle } from 'react-icons/fa'; 
 import PostCard from './components/PostCard';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
+
+//Allow requests from your Next.js frontend// Allow requests from your Next.js frontend
+
 export default function Home() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [url, setUrl] = useState("") 
+  const [phrase, setPhrase] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const router = useRouter()
   useEffect(() => {
@@ -16,6 +20,43 @@ export default function Home() {
       router.push(`/login`)
     }
   },[])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent form submission refresh
+    try {
+      setIsLoading(true);
+  
+      const params = new URLSearchParams({
+        url,
+        phrase,
+      });
+  
+      const res = await fetch(`http://54.193.172.228/check?${params.toString()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      // Log the raw response to check the status
+      console.log('Response status:', res.status);
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+  
+      const data = await res.json();
+      console.log('Data:', data);
+      alert('Success');
+    } catch (err) {
+      console.error('Error in checking claims:', err);
+    } finally {
+      setUrl('');
+      setPhrase('');
+      setIsLoading(false);
+    }
+  };
+  
+  
   return (
     <div className="flex flex-col min-h-screen bg-white overflow-y-auto">
       {/*  I'll put some dividers so clear which section of the page is which, e.g here is Header section */}
@@ -43,15 +84,32 @@ export default function Home() {
         <p className="text-xl text-center max-w-2xl mb-6">
           Fact-check speeches, videos, and articles at lightning speed. Enter a YouTube URL, and let us do the heavy lifting.
         </p>
+        <form className="flex flex-col w-full h-full items-center " onSubmit={handleSubmit}>
         <input
           className="w-3/4 md:w-1/2 h-12 p-5 border-2 border-white rounded-md text-black placeholder-gray-500 focus:outline-none"
           placeholder="Enter Youtube URL..."
+          value={url}
+          onChange={e => setUrl(e.target.value)}
+          type='text'
+          required
+          pattern='https?://.+'
+          disabled={isLoading}
+        />
+        <input
+          className="w-44 h-12 p-5 border-2 border-white rounded-md text-black placeholder-gray-500 focus:outline-none mt-5"
+          placeholder="Enter Key Phrase."
+          value={phrase}
+          onChange={e => setPhrase(e.target.value)}
+          type='text'
+          required
+          disabled={isLoading}
         />
         <div className="mt-8">
-          <button className="bg-white text-black px-6 py-2 rounded-full font-semibold shadow-lg hover:bg-gray-100">
+          <button className="bg-white text-black px-6 py-2 rounded-full font-semibold shadow-lg hover:bg-gray-100" disabled={isLoading} >
             Get Started
           </button>
         </div>
+        </form>
       </div>
 
       {/* Slogan Section */}

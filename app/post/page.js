@@ -38,6 +38,29 @@ export default function PostPage() {
         }
     }, [router]);
 
+    const handleSubmit = async () => {
+    
+        const data = {
+            user_id: router.query,
+            ...post
+        }
+
+        // Send JSON data to an API route or another server
+        const response = await fetch('/api/post/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+    
+        if (response.ok) {
+          // After the POST request is successful, navigate to another page
+        } else {
+          console.error('Failed to send data');
+        }
+    };
+
     if (!post) return <div style={styles.loading}>Loading...</div>;
 
     return (
@@ -118,7 +141,6 @@ export default function PostPage() {
                     ))}
                 </div>
             </div>
-
             {/* Footer Section with POST Button */}
             <div style={styles.footer}>
                 <p className="text-white text-lg mb-4">
@@ -126,7 +148,7 @@ export default function PostPage() {
                 </p>
                 <button
                     className="bg-white text-[#1A2B44] px-6 py-2 rounded-full font-semibold shadow-md hover:bg-gray-200 transition"
-                    onClick={() => router.push('/create-post')}
+                    onClick={handleSubmit}
                 >
                     POST
                 </button>

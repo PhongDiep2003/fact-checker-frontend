@@ -1,32 +1,57 @@
 "use client"
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation';
 const PostInfo = () => {
-  const router = useRouter(); 
-  const postId = router.state;
+  const router = useRouter();
   const [content, setContent] = useState("")
-  const handleEnterComment = async () => {
-    try {
-      if (localStorage.getItem("userId")) {
-        const res = await fetch('http://localhost:3000/api/postComment', {
-          method: "POST",
+  const searchParams = useSearchParams();
+  const [postId, setPostId] = useState(searchParams.get("id"))
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const id = searchParams.get("id")
+        const res = await fetch(`http://localhost:3000/api/post/id=${id}`, {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ postId, userId, content}),
         })
         if (res.ok) {
           const data = await res.json()
-          
+          console.log(data)
         }
-
-      } else {
-        alert("Please login to comment")
+      } catch(error) {
+        console.log("Error in Fetching Comments: ", error.message)
       }
-    } catch(error) {
-      console.log("Error in Submitting Comment: ", error.message)
     }
-  }
+
+    //Fetch comments dont work since the api keeps returning the id is not found
+
+    // fetchComments()
+  },[])
+
+  // const handleEnterComment = async () => {
+  //   try {
+  //     if (localStorage.getItem("userId")) {
+  //       const res = await fetch('http://localhost:3000/api/postComment', {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ postId, userId, content}),
+  //       })
+  //       if (res.ok) {
+  //         const data = await res.json()
+          
+  //       }
+
+  //     } else {
+  //       alert("Please login to comment")
+  //     }
+  //   } catch(error) {
+  //     console.log("Error in Submitting Comment: ", error.message)
+  //   }
+  // }
   return (
     <div className='h-screen'>
       {/* Grid */}

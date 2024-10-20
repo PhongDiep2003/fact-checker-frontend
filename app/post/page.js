@@ -41,9 +41,10 @@ export default function PostPage() {
     const handleSubmit = async () => {
     
         const data = {
-            user_id: router.query,
-            ...post
+            user_id: localStorage.getItem("userId"),
+            claims: {...post}
         }
+        console.log(router.query);
 
         // Send JSON data to an API route or another server
         const response = await fetch('/api/post/create', {

@@ -66,13 +66,16 @@ export default function Home() {
         },
         body: JSON.stringify({ data }),
        })
-
+       const data2 = await res.json();
+       console.log(data2);
       // localStorage.setItem('postData', JSON.stringify(data));
       // router.push('/post?userId=' + localStorage.getItem("userId"));
     } catch (error) {
       console.error('Error during submission:', error);
     } finally {
       setIsLoading(false);
+      setUrl("");
+      setPhrase("");
     }
   };
 

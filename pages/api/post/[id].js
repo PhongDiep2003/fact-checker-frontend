@@ -12,9 +12,9 @@ export default async function post_view(req, res) {
 
         const { id } = req.query;
         console.log("POST_ID: " + id);
-
+        console.log(typeof id);
         // Check if posts exists
-        const existingPost = await db.collection('posts').findOne({ postId: id });
+        const existingPost = await db.collection('posts').findOne({ _id: id });
         console.log(existingPost)
         // if(!existingPost)
         // {

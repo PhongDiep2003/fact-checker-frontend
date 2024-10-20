@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 const PostCard = ({post}) => {
   const router = useRouter()
   const handleClick = () => {
-    router.push(`/postInfo/?id=${post.postId}`)
+    router.push(`/postInfo/?id=${post._id}`)
   }
   
   return (

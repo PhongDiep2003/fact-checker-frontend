@@ -1,12 +1,27 @@
-
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { FaUserCircle, FaHome } from 'react-icons/fa'; // Import icons
 
 export default function PostPage() {
     const router = useRouter();
     const [post, setPost] = useState(null);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(); // Reference to the dropdown menu
+
+    const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+
+    // Close dropdown if clicked outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     useEffect(() => {
         const storedData = localStorage.getItem('postData');
@@ -14,7 +29,7 @@ export default function PostPage() {
             try {
                 const parsedData = JSON.parse(storedData);
                 console.log('Loaded post data:', parsedData);
-                setPost(parsedData.slice(1)); // Ignore the first element with success:true
+                setPost(parsedData.slice(1));
             } catch (error) {
                 console.error('Error parsing post data:', error);
                 router.push('/');
@@ -28,6 +43,45 @@ export default function PostPage() {
 
     return (
         <div style={styles.container}>
+            {/* Header Section with Home and Profile Icons */}
+            <div className="absolute top-4 right-4 flex items-center gap-4">
+                <FaHome
+                    size={32}
+                    className="text-white cursor-pointer"
+                    onClick={() => router.push('/')}
+                />
+                <div className="relative" ref={dropdownRef}>
+                    <FaUserCircle
+                        size={32}
+                        className="text-white cursor-pointer"
+                        onClick={toggleDropdown}
+                    />
+                    {dropdownOpen && (
+                        <div
+                            className="absolute mt-2 bg-white shadow-lg rounded-md w-40"
+                            style={{ top: '100%', right: '0' }}
+                        >
+                            <ul className="py-2">
+                                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-black">
+                                    Profile
+                                </li>
+                                <li
+                                    className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer"
+                                    onClick={() => {
+                                        if (localStorage.getItem('userId')) {
+                                            localStorage.removeItem('userId');
+                                        }
+                                        router.push('/login');
+                                    }}
+                                >
+                                    Logout
+                                </li>
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            </div>
+
             <div style={styles.innerContainer}>
                 <h1 style={styles.title}>Post Claims and Sources</h1>
 
@@ -77,6 +131,7 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'relative',
     },
     innerContainer: {
         maxWidth: '1200px',

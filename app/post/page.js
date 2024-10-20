@@ -2,17 +2,16 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { FaUserCircle, FaHome } from 'react-icons/fa'; // Import icons
+import { FaUserCircle, FaHome } from 'react-icons/fa';
 
 export default function PostPage() {
     const router = useRouter();
     const [post, setPost] = useState(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const dropdownRef = useRef(); // Reference to the dropdown menu
+    const dropdownRef = useRef();
 
     const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 
-    // Close dropdown if clicked outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -43,7 +42,7 @@ export default function PostPage() {
 
     return (
         <div style={styles.container}>
-            {/* Header Section with Home and Profile Icons */}
+            {/* Header Section */}
             <div className="absolute top-4 right-4 flex items-center gap-4">
                 <FaHome
                     size={32}
@@ -82,6 +81,7 @@ export default function PostPage() {
                 </div>
             </div>
 
+            {/* Main Content */}
             <div style={styles.innerContainer}>
                 <h1 style={styles.title}>Post Claims and Sources</h1>
 
@@ -118,6 +118,19 @@ export default function PostPage() {
                     ))}
                 </div>
             </div>
+
+            {/* Footer Section with POST Button */}
+            <div style={styles.footer}>
+                <p className="text-white text-lg mb-4">
+                    Want others to see these results?
+                </p>
+                <button
+                    className="bg-white text-[#1A2B44] px-6 py-2 rounded-full font-semibold shadow-md hover:bg-gray-200 transition"
+                    onClick={() => router.push('/create-post')}
+                >
+                    POST
+                </button>
+            </div>
         </div>
     );
 }
@@ -129,7 +142,8 @@ const styles = {
         minHeight: '100vh',
         padding: '2rem',
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         alignItems: 'center',
         position: 'relative',
     },
@@ -202,5 +216,9 @@ const styles = {
     loading: {
         textAlign: 'center',
         fontSize: '1.5rem',
+    },
+    footer: {
+        textAlign: 'center',
+        marginTop: '2rem',
     },
 };

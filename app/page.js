@@ -12,6 +12,31 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const router = useRouter();
+  const [trendingPosts, setTrendingPosts] = useState([]);
+
+  // Get all posts
+  useEffect(() => {
+   const fetchAllPosts = async () => {
+    try{
+      console.log("Fetching all posts...");
+      const res = await fetch("http://localhost:3000/api/post/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setTrendingPosts(data.data);
+      }
+
+    } catch(error) {
+      console.error('Error fetching posts:', error);
+    }
+   }
+  fetchAllPosts();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,8 +59,16 @@ export default function Home() {
       const data = await response.json();
       console.log('API Response:', data);
 
-      localStorage.setItem('postData', JSON.stringify(data));
-      router.push('/post?userId=' + localStorage.getItem("userId"));
+      const res = await fetch("http://localhost:3000/api/post/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data }),
+       })
+
+      // localStorage.setItem('postData', JSON.stringify(data));
+      // router.push('/post?userId=' + localStorage.getItem("userId"));
     } catch (error) {
       console.error('Error during submission:', error);
     } finally {
@@ -123,9 +156,9 @@ export default function Home() {
       </p>
 
       <div className="flex flex-col space-y-24 w-full mt-8 px-20">
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        {trendingPosts.map((post) => (
+          <PostCard key={post._id} post={post} />
+        ))}
       </div>
 
       {/* Footer */}

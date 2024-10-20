@@ -32,7 +32,13 @@ export default async function create_post(req, res) {
             success: true, 
             message: 'Post created successfully', 
         });
+        
+        const {data} = req.body;
 
+        const result = await db.collection('posts').insertOne({ email, password });
+
+        res.status(201).json({ success: true, post: result, message: 'Post Created Successfully' });
+       
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ success: false, user: null, message: 'Error fetching post', error });

@@ -1,8 +1,57 @@
 "use client"
-import Image from 'next/image';
-import React from 'react'
-
+import React, { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation';
 const PostInfo = () => {
+  const router = useRouter();
+  const [content, setContent] = useState("")
+  const searchParams = useSearchParams();
+  const [postId, setPostId] = useState(searchParams.get("id"))
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const id = searchParams.get("id")
+        const res = await fetch(`http://localhost:3000/api/post/id=${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        if (res.ok) {
+          const data = await res.json()
+          console.log(data)
+        }
+      } catch(error) {
+        console.log("Error in Fetching Comments: ", error.message)
+      }
+    }
+
+    //Fetch comments dont work since the api keeps returning the id is not found
+
+    // fetchComments()
+  },[])
+
+  // const handleEnterComment = async () => {
+  //   try {
+  //     if (localStorage.getItem("userId")) {
+  //       const res = await fetch('http://localhost:3000/api/postComment', {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ postId, userId, content}),
+  //       })
+  //       if (res.ok) {
+  //         const data = await res.json()
+          
+  //       }
+
+  //     } else {
+  //       alert("Please login to comment")
+  //     }
+  //   } catch(error) {
+  //     console.log("Error in Submitting Comment: ", error.message)
+  //   }
+  // }
   return (
     <div className='h-screen'>
       {/* Grid */}
@@ -38,6 +87,8 @@ const PostInfo = () => {
             <input
               className="w-3/4 h-14 p-5 border-2 border-[#1A2B44] rounded-md text-black placeholder-gray-500 focus:outline-none mb-40 "
               placeholder="Enter comment..."
+              value={content}
+              onChange={e => setContent(e.target.value)}
             />
             {/* Comments */}
             <div className='flex w-full flex-col items-center space-y-20 overflow-y-auto'>

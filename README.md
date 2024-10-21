@@ -23,10 +23,6 @@ This application leverages a variety of technologies and APIs to deliver fast an
 - **SpaCy NLP**: Extracts claims and keywords from text.
 - **CORS-Enabled**: Ensures cross-origin requests work seamlessly across domains.
 
-## 🎥 Demo
-* **Video Demo:** [Link](https://www.youtube.com/here) <br>
-* **Website Demo (until our backend shuts down):** [Link](https://here.netlify.app/)
-
 ## 🧑 Creators and Developers of Fact-Checker
 * **Hasnain Mucklai**: [GitHub](https://github.com/Hasnain7861) [LinkedIn](https://www.linkedin.com/in/hasnainmucklai/)
 * **Phong Diep**: [GitHub](https://github.com/PhongDiep2003) [LinkedIn](https://www.linkedin.com/in/here/)

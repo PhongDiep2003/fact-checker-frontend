@@ -1,9 +1,9 @@
 "use client";
 
-import { FaUserCircle } from 'react-icons/fa'; 
-import PostCard from './components/PostCard';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { FaUserCircle } from "react-icons/fa";
+import PostCard from "./components/PostCard";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -16,26 +16,25 @@ export default function Home() {
 
   // Get all posts
   useEffect(() => {
-   const fetchAllPosts = async () => {
-    try{
-      console.log("Fetching all posts...");
-      const res = await fetch("http://localhost:3000/api/post/all", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const fetchAllPosts = async () => {
+      try {
+        console.log("Fetching all posts...");
+        const res = await fetch("http://localhost:3000/api/post/all", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (res.ok) {
-        const data = await res.json();
-        setTrendingPosts(data.data);
+        if (res.ok) {
+          const data = await res.json();
+          setTrendingPosts(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
       }
-
-    } catch(error) {
-      console.error('Error fetching posts:', error);
-    }
-   }
-  fetchAllPosts();
+    };
+    fetchAllPosts();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -47,8 +46,8 @@ export default function Home() {
       const response = await fetch(
         `http://54.193.172.228/check?${params.toString()}`,
         {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
         }
       );
 
@@ -57,7 +56,7 @@ export default function Home() {
       }
 
       const data = await response.json();
-      console.log('API Response:', data);
+      console.log("API Response:", data);
 
       const res = await fetch("http://localhost:3000/api/post/create", {
         method: "POST",
@@ -65,13 +64,13 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ data }),
-       })
-       const data2 = await res.json();
-       console.log(data2);
+      });
+      const data2 = await res.json();
+      console.log(data2);
       // localStorage.setItem('postData', JSON.stringify(data));
       // router.push('/post?userId=' + localStorage.getItem("userId"));
     } catch (error) {
-      console.error('Error during submission:', error);
+      console.error("Error during submission:", error);
     } finally {
       setIsLoading(false);
       setUrl("");
@@ -98,7 +97,7 @@ export default function Home() {
                 className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer"
                 onClick={() => {
                   localStorage.removeItem("userId");
-                  router.push('/login');
+                  router.push("/login");
                 }}
               >
                 Logout
@@ -110,12 +109,18 @@ export default function Home() {
 
       {/* Blue Section with Adjusted Centering */}
       <div className="flex flex-col items-center justify-start bg-[#1A2B44] text-white h-[60vh] pt-16">
-        <h1 className="text-5xl font-extrabold mb-4">Uncover the Truth Instantly</h1>
+        <h1 className="text-5xl font-extrabold mb-4">
+          Uncover the Truth Instantly
+        </h1>
         <p className="text-xl text-center max-w-2xl mb-6">
-          Fact-check speeches, videos, and articles at lightning speed. Enter a YouTube or article URL, and let us do the heavy lifting.
+          Fact-check speeches, videos, and articles at lightning speed. Enter a
+          YouTube or article URL, and let us do the heavy lifting.
         </p>
 
-        <form className="flex flex-col w-full h-full items-center" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col w-full h-full items-center"
+          onSubmit={handleSubmit}
+        >
           <input
             className="w-3/4 md:w-1/2 h-12 p-5 border-2 border-white rounded-md text-black placeholder-gray-500 focus:outline-none"
             placeholder="Enter Youtube or article URL..."
@@ -166,7 +171,9 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="w-full py-8 bg-black text-white text-center mt-16">
-        <p className="text-sm">© 2024 Fact Checker - Empowering users with truth</p>
+        <p className="text-sm">
+          © 2024 Fact Checker - Empowering users with truth
+        </p>
       </footer>
     </div>
   );
